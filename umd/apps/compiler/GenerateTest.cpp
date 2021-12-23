@@ -312,7 +312,13 @@ NvDlaError generateProfile(const TestAppArgs* appArgs, std::string* profileName,
 fail:
     return e;
 }
-
+/**
+ * @brief 模型量化
+ * @param appArgs main 参数
+ * @param i
+ * @param network 模型文件
+ * @return
+ */
 NvDlaError generateTensorScales(const TestAppArgs* appArgs, TestInfo* i, nvdla::INetwork* network)
 {
     NvDlaError e = NvDlaSuccess;

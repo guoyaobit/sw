@@ -241,17 +241,17 @@ public:
     NvS32 h;
     NvS32 w;
 };
-
+//输入层
 class Dims4
 {
 public:
     Dims4() : n(1), c(0), h(0), w(0) {};
     Dims4(NvS32 c, NvS32 h, NvS32 w) : n(1), c(c), h(h), w(w) {};
     Dims4(NvS32 n, NvS32 c, NvS32 h, NvS32 w) : n(n), c(c), h(h), w(w) {};
-    NvS32 n;      //!< the number of images in the data or number of kernels in the weights (default = 1)
-    NvS32 c;      //!< the number of channels in the data
-    NvS32 h;      //!< the height of the data
-    NvS32 w;      //!< the width of the data
+    NvS32 n;      //!< the number of images in the data or number of kernels in the weights (default = 1) batch size
+    NvS32 c;      //!< the number of channels in the data 图像通道数
+    NvS32 h;      //!< the height of the data 图像高度
+    NvS32 w;      //!< the width of the data 图像宽度
     inline bool operator==(const Dims4& other) const
     {
         return (n == other.n && c == other.c && h == other.h && w == other.w);

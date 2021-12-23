@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" autoUpload="Always" serverName="Remote Host (1205d79c-ace5-41c6-ba95-c685d31f8fbc)" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Remote Host (1205d79c-ace5-41c6-ba95-c685d31f8fbc)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/Docker-nvdla/sw" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
+  </component>
+</project>

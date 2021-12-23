@@ -56,7 +56,10 @@ class IElementWiseLayer;
 class IWisdomContainerEntry;
 class ITensor;
 
+/*
+@brief 解析部分的中间结果
 
+*/
 class INetwork
 {
 public:

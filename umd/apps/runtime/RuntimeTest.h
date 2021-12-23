@@ -38,7 +38,8 @@
 
 #include <string>
 #include <vector>
-
+/* @brief 输入变量结构体
+*/
 struct TestAppArgs
 {
     std::string inputPath;

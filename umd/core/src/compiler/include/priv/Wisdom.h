@@ -120,7 +120,8 @@ protected:
     std::map<IProfile *, std::string> m_profile_sym;
 };
 
-
+/* @brief 工厂类
+*/
 class WisdomFactory
 {
 public:

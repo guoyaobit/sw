@@ -233,7 +233,14 @@ void CaffeParser::shutdownProtobufLibrary()
 // input and output blobs.
 //
 // So we need to read the deploy file to get the input
-
+/**
+ * @brief 读取二进制Caffe参数文件
+ * @param net
+ * @param file Caffe Model 文件
+ * @param bufSize
+ * @retval 返回值
+ *  - false 解析失败
+ */
 static bool readBinaryProto(dc::NetParameter* net, const char* file, size_t bufSize)
 {
     CHECK_NULL_RET_VAL(net, false);
@@ -250,7 +257,7 @@ static bool readBinaryProto(dc::NetParameter* net, const char* file, size_t bufS
     IstreamInputStream rawInput(&stream);
     CodedInputStream codedInput(&rawInput);
     codedInput.SetTotalBytesLimit(int(bufSize), -1);
-
+    //从std::ifstream 文件进行解析
     bool ok = net->ParseFromCodedStream(&codedInput);
     stream.close();
 
@@ -263,8 +270,17 @@ static bool readBinaryProto(dc::NetParameter* net, const char* file, size_t bufS
     return ok;
 }
 
+/**@brief prototxt解析入口
+ * @details 使用google::protobuf::TextFormat::Parse
+ * @param[in] *net NetIR
+ * @param[in] file 网络文件
+ * @return  执行结果
+ *  - false could not open file 、Caffe Parser: could not parse text file
+ *  - ok
+*/
 static bool readTextProto(dc::NetParameter* net, const char* file)
 {
+	// 检查输入是否符合规范
     CHECK_NULL_RET_VAL(net, false);
     CHECK_NULL_RET_VAL(file, false);
     using namespace google::protobuf::io;
@@ -277,6 +293,9 @@ static bool readTextProto(dc::NetParameter* net, const char* file)
     }
 
     IstreamInputStream input(&stream);
+	
+	// 基于google protobuf 对模型文件格式进行转换
+	// https://developers.google.com/protocol-buffers/docs/reference/cpp/google.protobuf.text_format?hl=en#TextFormat.Parser
     bool ok = google::protobuf::TextFormat::Parse(&input, net);
     stream.close();
 
@@ -910,6 +929,12 @@ CaffeParser::~CaffeParser()
 
     delete mBlobNameToTensor;
 }
+/**
+*@brief Caffe模型解析
+*@detail 核心代码
+*@param deployFile Caffe 模型结构文件
+*@param modelFile Caffe 模型参数文件
+*/
 
 const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
                                             const char* modelFile,
@@ -927,6 +952,7 @@ const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
 
     // this is used to deal with dropout layers which have different input and output
     mModel = new dc::NetParameter();
+	//读取Caffe modelFile
     if (!readBinaryProto(mModel/*.get()*/, modelFile, mProtobufBufferSize))
     {
         gLogError << "Could not parse model file" << std::endl;
@@ -934,21 +960,23 @@ const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
     }
 
     mDeploy = new dc::NetParameter();
+	//读取 deployFile 文件
     if (!readTextProto(mDeploy/*.get()*/, deployFile))
     {
         gLogError << "Could not parse deploy file" << std::endl;
         return 0;
     }
-
+    // 对网络结构进行处理
     bool ok = true;
     CaffeWeightFactory weights(*mModel/**mModel.get()*/,
                                false /*weightType == DataType::kHALF*/, mTmpAllocs);
 
     mBlobNameToTensor = new BlobNameToTensor();
-
+	// 处理模型输入
     for (int i = 0; i < mDeploy->input_size(); i++)
     {
         Dims4 dims;
+        
         if (mDeploy->input_shape_size()) {
             dims.n = (int)mDeploy->input_shape().Get(i).dim().Get(0);
             dims.c = (int)mDeploy->input_shape().Get(i).dim().Get(1);
@@ -962,11 +990,12 @@ const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
             dims.w = (int)mDeploy->input_dim().Get(i * 4 + 3);
         }
 
+		
         ITensor* tensor = network->addInput(mDeploy->input().Get(0).c_str(), dims);
         mBlobNameToTensor->add(mDeploy->input().Get(0), tensor);
 
     }
-
+// 处理特殊层
     for (int i = 0; i < mDeploy->layer_size() && ok; i++)
     {
         const dc::LayerParameter& layerMsg = mDeploy->layer(i);
@@ -974,14 +1003,14 @@ const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
             continue;
         }
 
-        if (layerMsg.type() == "Dropout")
+        if (layerMsg.type() == "Dropout") //dropout 层
         {
             mBlobNameToTensor->add(layerMsg.top().Get(0),
                                    mBlobNameToTensor->find(layerMsg.bottom().Get(0).c_str()));
             continue;
         }
 
-        if (layerMsg.type() == "Input")
+        if (layerMsg.type() == "Input") // Input层
         {
             const dc::InputParameter& p = layerMsg.input_param();
             for (int i = 0; i < layerMsg.top_size(); i++)
@@ -993,7 +1022,7 @@ const IBlobNameToTensor* CaffeParser::parse(const char* deployFile,
             }
             continue;
         }
-        if (layerMsg.type() == "Flatten")
+        if (layerMsg.type() == "Flatten") //Flatten 层
         {
             ITensor* tensor = (*mBlobNameToTensor)[layerMsg.bottom().Get(0)];
             (*mBlobNameToTensor)[layerMsg.top().Get(0)] = tensor;

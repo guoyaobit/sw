@@ -25,7 +25,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+/**@mainpage  NVDLA compiler
+* <table>
+* <tr><th>Project  <td> nvdla compiler
+* <tr><th>Author   <td> guoyao 
+* <tr><th>Source   <td> /home/gy/Docker-nvdla/sw/umd/apps/compiler/
+* </table>
+* @section   
+* 
+*
+* @section   
+*
+* 
+* @section    
+*
 
+* @section   
+*
+**********************************************************************************
+*/
 #include "main.h"
 #include "ErrorMacros.h"
 
@@ -61,6 +79,12 @@ static TestAppArgs defaultTestAppArgs =
     /* .inDataFormat = */ DEFAULT_DATA_FMT,
     /* .computePrecision = */ nvdla::DataType::INT8
 };
+/**@brief main 第一步 ，检查输入是否正确
+
+
+
+*/
+
 
 NvDlaError testSetup(const TestAppArgs* appArgs, TestInfo* i)
 {
@@ -385,7 +409,7 @@ int main(int argc, char* argv[])
             return EXIT_SUCCESS;
     }
 
-    // Launch
+    // Launch 启动测试
     e = launchTest(&testAppArgs);
     if (e != NvDlaSuccess)
         return -1;

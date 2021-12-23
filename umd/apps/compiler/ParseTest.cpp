@@ -47,11 +47,16 @@ NvDlaError parseSetup(const TestAppArgs* appArgs, TestInfo* i)
 {
     return NvDlaSuccess;
 }
-
+/**
+ * @brief 对network 进行INT8量化
+ * @param appArgs main函数的输入
+ * @param network 对caffe 模型及参数进行 格式转换后的结果
+ */
 NvDlaError parseTensorScales(const TestAppArgs* appArgs, TestInfo *i, nvdla::INetwork* network)
 {
     NvDlaError e = NvDlaSuccess;
     NvDlaStatType stat;
+    //输入参数里的calibTable
     std::string calibTableFile = /*i->calibTablesPath + "/" + */appArgs->calibTable;
 
     PROPAGATE_ERROR_FAIL(NvDlaStat(calibTableFile.c_str(), &stat));
@@ -78,12 +83,14 @@ NvDlaError parseTensorScales(const TestAppArgs* appArgs, TestInfo *i, nvdla::INe
             std::vector<nvdla::ITensor*>::iterator nii = networkInputs.begin();
 
             // set scaling factor for the network input tensors
+            // 这里是对输入的数据进行量化，一般是 data 层
             for (; nii != networkInputs.end(); ++nii)
             {
                 NvF32 scale = 0.0f;
                 NvF32 min = 0.0f;
                 NvF32 max = 0.0f;
                 std::string tName = (*nii)->getName();
+                // 可以发现这里是根据每个 Layer 的 Name 来索引网络的 scale，也就是说 TensorRT
                 if (doc[tName.c_str()].HasMember("scale")) {
                     scale = doc[tName.c_str()]["scale"].GetFloat();
                     min = scale * -127.0f;
@@ -98,10 +105,11 @@ NvDlaError parseTensorScales(const TestAppArgs* appArgs, TestInfo *i, nvdla::INe
                 }
 
                 // set same dynamic range for all channels of the tensor (cIndex = -1)
+                // 设置动态范围
                 PROPAGATE_ERROR_FAIL( (*nii)->setChannelDynamicRange(-1, min, max) );
                 const_cast<TestAppArgs*>(appArgs)->tensorScales.insert(std::pair<std::string, NvF32>(tName, scale));
             }
-
+            //  这里是提取每一层Layer的Scale信息
             for (; li != networkLayers.end(); ++li)
             {
                 NvF32 scale = 0.0f;
@@ -135,7 +143,10 @@ NvDlaError parseTensorScales(const TestAppArgs* appArgs, TestInfo *i, nvdla::INe
 fail:
     return e;
 }
+/*
+@brief 解析Caffe模型 输出为Network
 
+*/
 static NvDlaError parseCaffeNetwork(const TestAppArgs* appArgs, TestInfo* i)
 {
     NVDLA_UNUSED(appArgs);
@@ -147,17 +158,17 @@ static NvDlaError parseCaffeNetwork(const TestAppArgs* appArgs, TestInfo* i)
     nvdla::caffe::ICaffeParser* parser = nvdla::caffe::createCaffeParser();
     std::string caffePrototxtFile = appArgs->prototxt.c_str();
     std::string caffeModelFile = appArgs->caffemodel.c_str();
-
+// 初始化网络对象
     network = nvdla::createNetwork();
     if (!network)
         ORIGINATE_ERROR_FAIL(NvDlaError_BadParameter, "createNetwork() failed");
-
     NvDlaDebugPrintf("parsing caffe network...\n");
+	
+// 解析 Prototxt CaffeModel 转换为network 函数定义位置在CaffeParser.cpp
     b = parser->parse(caffePrototxtFile.c_str(), caffeModelFile.c_str(), network);
     if (!b)
         ORIGINATE_ERROR_FAIL(NvDlaError_BadParameter, "Unable to parse caffemodel: \"%s\"", caffePrototxtFile.c_str());
-
-    // if the application has so far not marked the network's outputs, allow the parser to do so now
+// if the application has so far not marked the network's outputs, allow the parser to do so now
     if (network->getNumOutputs() <= 0)
     {
         int outs = parser->identifyOutputs(network);
@@ -165,8 +176,8 @@ static NvDlaError parseCaffeNetwork(const TestAppArgs* appArgs, TestInfo* i)
         if (outs <= 0)
             ORIGINATE_ERROR_FAIL(NvDlaError_BadValue, "Unable to identify outputs for the network: %d", outs);
     }
-
-    if (appArgs->computePrecision == nvdla::DataType::INT8)
+	// 模型量化
+    if (appArgs->computePrecision == nvdla::DataType::INT8) // 默认计算精度INT8
     {
         if (appArgs->calibTable != "")  // parse and set tensor scales
         {
@@ -189,6 +200,9 @@ static NvDlaError parseCaffeNetwork(const TestAppArgs* appArgs, TestInfo* i)
 fail:
     return e;
 }
+/**
+@brief 解析 main函数的输入参数
+**/
 
 NvDlaError parse(const TestAppArgs* appArgs, TestInfo* i)
 {
@@ -225,7 +239,9 @@ fail:
     }
     return e;
 }
-
+/** 
+@brief 解析与编译
+**/
 NvDlaError parseAndCompile(const TestAppArgs* appArgs, TestInfo* i)
 {
     NvDlaError e = NvDlaSuccess;
