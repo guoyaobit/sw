@@ -1,0 +1,106 @@
+<html><head><title>AddPerson.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="sourcestyles.css" />
+</head><body link="blue" vlink="blue">
+<h3>File: C:\Users\X1G9\Desktop\NVDLA\sw\umd\external\protobuf-2.6\examples\AddPerson.java</h3>
+<SCRIPT>
+defaultStatus = "File: C:\\Users\\X1G9\\Desktop\\NVDLA\\sw\\umd\\external\\protobuf-2.6\\examples\\AddPerson.java";
+top.document.title  = "AddPerson.java";
+</SCRIPT>
+<pre><span class="default"></span><a name="1"><font size=-1>1     </font></a><span class="default"></span><span class="comment">// See README.txt for information and build instructions.</span>
+<a name="2"><font size=-1>2     </font></a><span class="comment"></span>
+<a name="3"><font size=-1>3     </font></a><span class="comment"></span><span class="keyword">import </span><span class="default">com.example.tutorial.<a href="dictionary_C.html#91299">AddressBookProtos</a>.<a href="dictionary_C.html#91291">AddressBook</a>;</span>
+<a name="4"><font size=-1>4     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">com.example.tutorial.<a href="dictionary_C.html#91299">AddressBookProtos</a>.<a href="dictionary_C.html#91297">Person</a>;</span>
+<a name="5"><font size=-1>5     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#91292">BufferedReader</a>;</span>
+<a name="6"><font size=-1>6     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#91295">FileInputStream</a>;</span>
+<a name="7"><font size=-1>7     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#36843">FileNotFoundException</a>;</span>
+<a name="8"><font size=-1>8     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#36844">FileOutputStream</a>;</span>
+<a name="9"><font size=-1>9     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#91296">InputStreamReader</a>;</span>
+<a name="10"><font size=-1>10     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#11312">IOException</a>;</span>
+<a name="11"><font size=-1>11     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">java.<a href="dictionary_J.html#11319">io</a>.<a href="dictionary_J.html#91298">PrintStream</a>;</span>
+<a name="12"><font size=-1>12     </font></a><span class="default"></span>
+<a name="13"><font size=-1>13     </font></a><span class="default"></span><span class="keyword">class <a href="dictionary_A.html#91267">AddPerson</a> </span><span class="default">{</span>
+<a name="14"><font size=-1>14     </font></a><span class="default">  </span><span class="comment">// This function fills in a Person message based on user input.</span>
+<a name="15"><font size=-1>15     </font></a><span class="comment">  </span><span class="keyword">static <a href="dictionary_C.html#91297">Person</a> <a href="dictionary_A.html#91268">PromptForAddress</a></span><span class="default">(<a href="dictionary_J.html#91292">BufferedReader</a> <a href="dictionary_A.html#91280">stdin</a>,</span>
+<a name="16"><font size=-1>16     </font></a><span class="default">                                 <a href="dictionary_J.html#91298">PrintStream</a> <a href="dictionary_A.html#91281">stdout</a>) </span><span class="keyword">throws <a href="dictionary_J.html#11312">IOException</a> </span><span class="default">{</span>
+<a name="17"><font size=-1>17     </font></a><span class="default">    <a href="dictionary_P.html#91300">Person</a>.<a href="dictionary_P.html#91293">Builder</a> <a href="dictionary_A.html#91278">person</a> = <a href="dictionary_P.html#91300">Person</a>.<a href="dictionary_N.html#51">newBuilder</a>();</span>
+<a name="18"><font size=-1>18     </font></a><span class="default"></span>
+<a name="19"><font size=-1>19     </font></a><span class="default">    <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#51080">print</a>(</span><span class="string">&quot;Enter person ID: &quot;</span><span class="default">);</span>
+<a name="20"><font size=-1>20     </font></a><span class="default">    <a href="dictionary_A.html#91278">person</a>.<a href="dictionary_S.html#91272">setId</a>(Integer.<a href="dictionary_V.html#50856">valueOf</a>(<a href="dictionary_A.html#91280">stdin</a>.<a href="dictionary_R.html#91270">readLine</a>()));</span>
+<a name="21"><font size=-1>21     </font></a><span class="default"></span>
+<a name="22"><font size=-1>22     </font></a><span class="default">    <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#51080">print</a>(</span><span class="string">&quot;Enter name: &quot;</span><span class="default">);</span>
+<a name="23"><font size=-1>23     </font></a><span class="default">    <a href="dictionary_A.html#91278">person</a>.<a href="dictionary_S.html#91273">setName</a>(<a href="dictionary_A.html#91280">stdin</a>.<a href="dictionary_R.html#91270">readLine</a>());</span>
+<a name="24"><font size=-1>24     </font></a><span class="default"></span>
+<a name="25"><font size=-1>25     </font></a><span class="default">    <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#51080">print</a>(</span><span class="string">&quot;Enter email address (blank for none): &quot;</span><span class="default">);</span>
+<a name="26"><font size=-1>26     </font></a><span class="default">    <a href="dictionary_S.html#139">String</a> <a href="dictionary_A.html#91276">email</a> = <a href="dictionary_A.html#91280">stdin</a>.<a href="dictionary_R.html#91270">readLine</a>();</span>
+<a name="27"><font size=-1>27     </font></a><span class="default">    </span><span class="keyword">if </span><span class="default">(<a href="dictionary_A.html#91276">email</a>.<a href="dictionary_L.html#111">length</a>() &gt; </span><span class="number">0</span><span class="default">) {</span>
+<a name="28"><font size=-1>28     </font></a><span class="default">      <a href="dictionary_A.html#91278">person</a>.<a href="dictionary_S.html#91271">setEmail</a>(<a href="dictionary_A.html#91276">email</a>);</span>
+<a name="29"><font size=-1>29     </font></a><span class="default">    }</span>
+<a name="30"><font size=-1>30     </font></a><span class="default"></span>
+<a name="31"><font size=-1>31     </font></a><span class="default">    </span><span class="keyword">while </span><span class="default">(</span><span class="keyword">true</span><span class="default">) {</span>
+<a name="32"><font size=-1>32     </font></a><span class="default">      <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#51080">print</a>(</span><span class="string">&quot;Enter a phone number (or leave blank to finish): &quot;</span><span class="default">);</span>
+<a name="33"><font size=-1>33     </font></a><span class="default">      <a href="dictionary_S.html#139">String</a> <a href="dictionary_A.html#91277">number</a> = <a href="dictionary_A.html#91280">stdin</a>.<a href="dictionary_R.html#91270">readLine</a>();</span>
+<a name="34"><font size=-1>34     </font></a><span class="default">      </span><span class="keyword">if </span><span class="default">(<a href="dictionary_A.html#91277">number</a>.<a href="dictionary_L.html#111">length</a>() == </span><span class="number">0</span><span class="default">) {</span>
+<a name="35"><font size=-1>35     </font></a><span class="default">        </span><span class="keyword">break</span><span class="default">;</span>
+<a name="36"><font size=-1>36     </font></a><span class="default">      }</span>
+<a name="37"><font size=-1>37     </font></a><span class="default"></span>
+<a name="38"><font size=-1>38     </font></a><span class="default">      Person.<a href="dictionary_P.html#91301">PhoneNumber</a>.<a href="dictionary_P.html#91294">Builder</a> <a href="dictionary_A.html#91279">phoneNumber</a> =</span>
+<a name="39"><font size=-1>39     </font></a><span class="default">        <a href="dictionary_P.html#91300">Person</a>.PhoneNumber.<a href="dictionary_N.html#51">newBuilder</a>().<a href="dictionary_S.html#91274">setNumber</a>(<a href="dictionary_A.html#91277">number</a>);</span>
+<a name="40"><font size=-1>40     </font></a><span class="default"></span>
+<a name="41"><font size=-1>41     </font></a><span class="default">      <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#51080">print</a>(</span><span class="string">&quot;Is this a mobile, home, or work phone? &quot;</span><span class="default">);</span>
+<a name="42"><font size=-1>42     </font></a><span class="default">      <a href="dictionary_S.html#139">String</a> <a href="dictionary_A.html#91282">type</a> = <a href="dictionary_A.html#91280">stdin</a>.<a href="dictionary_R.html#91270">readLine</a>();</span>
+<a name="43"><font size=-1>43     </font></a><span class="default">      </span><span class="keyword">if </span><span class="default">(<a href="dictionary_A.html#91282">type</a>.<a href="dictionary_E.html#11241">equals</a>(</span><span class="string">&quot;mobile&quot;</span><span class="default">)) {</span>
+<a name="44"><font size=-1>44     </font></a><span class="default">        <a href="dictionary_A.html#91279">phoneNumber</a>.<a href="dictionary_S.html#91275">setType</a>(<a href="dictionary_P.html#91300">Person</a>.PhoneType.MOBILE);</span>
+<a name="45"><font size=-1>45     </font></a><span class="default">      } </span><span class="keyword">else if </span><span class="default">(<a href="dictionary_A.html#91282">type</a>.<a href="dictionary_E.html#11241">equals</a>(</span><span class="string">&quot;home&quot;</span><span class="default">)) {</span>
+<a name="46"><font size=-1>46     </font></a><span class="default">        <a href="dictionary_A.html#91279">phoneNumber</a>.<a href="dictionary_S.html#91275">setType</a>(<a href="dictionary_P.html#91300">Person</a>.PhoneType.HOME);</span>
+<a name="47"><font size=-1>47     </font></a><span class="default">      } </span><span class="keyword">else if </span><span class="default">(<a href="dictionary_A.html#91282">type</a>.<a href="dictionary_E.html#11241">equals</a>(</span><span class="string">&quot;work&quot;</span><span class="default">)) {</span>
+<a name="48"><font size=-1>48     </font></a><span class="default">        <a href="dictionary_A.html#91279">phoneNumber</a>.<a href="dictionary_S.html#91275">setType</a>(<a href="dictionary_P.html#91300">Person</a>.PhoneType.WORK);</span>
+<a name="49"><font size=-1>49     </font></a><span class="default">      } </span><span class="keyword">else </span><span class="default">{</span>
+<a name="50"><font size=-1>50     </font></a><span class="default">        <a href="dictionary_A.html#91281">stdout</a>.<a href="dictionary_P.html#36850">println</a>(</span><span class="string">&quot;Unknown phone type.  Using default.&quot;</span><span class="default">);</span>
+<a name="51"><font size=-1>51     </font></a><span class="default">      }</span>
+<a name="52"><font size=-1>52     </font></a><span class="default"></span>
+<a name="53"><font size=-1>53     </font></a><span class="default">      <a href="dictionary_A.html#91278">person</a>.<a href="dictionary_A.html#91269">addPhone</a>(<a href="dictionary_A.html#91279">phoneNumber</a>);</span>
+<a name="54"><font size=-1>54     </font></a><span class="default">    }</span>
+<a name="55"><font size=-1>55     </font></a><span class="default"></span>
+<a name="56"><font size=-1>56     </font></a><span class="default">    </span><span class="keyword">return <a href="dictionary_A.html#91278">person</a></span><span class="default">.<a href="dictionary_B.html#46">build</a>();</span>
+<a name="57"><font size=-1>57     </font></a><span class="default">  }</span>
+<a name="58"><font size=-1>58     </font></a><span class="default"></span>
+<a name="59"><font size=-1>59     </font></a><span class="default">  </span><span class="comment">// Main function:  Reads the entire address book from a file,</span>
+<a name="60"><font size=-1>60     </font></a><span class="comment">  //   adds one person based on user input, then writes it back out to the same</span>
+<a name="61"><font size=-1>61     </font></a><span class="comment">  //   file.</span>
+<a name="62"><font size=-1>62     </font></a><span class="comment">  </span><span class="keyword">public static void <a href="dictionary_A.html#91283">main</a></span><span class="default">(<a href="dictionary_S.html#139">String</a>[] <a href="dictionary_A.html#91288">args</a>) </span><span class="keyword">throws <a href="dictionary_E.html#7">Exception</a> </span><span class="default">{</span>
+<a name="63"><font size=-1>63     </font></a><span class="default">    </span><span class="keyword">if </span><span class="default">(<a href="dictionary_A.html#91288">args</a>.<a href="dictionary_L.html#11328">length</a> != </span><span class="number">1</span><span class="default">) {</span>
+<a name="64"><font size=-1>64     </font></a><span class="default">      System.err.<a href="dictionary_P.html#36850">println</a>(</span><span class="string">&quot;Usage:  AddPerson ADDRESS_BOOK_FILE&quot;</span><span class="default">);</span>
+<a name="65"><font size=-1>65     </font></a><span class="default">      System.<a href="dictionary_E.html#36858">exit</a>(-</span><span class="number">1</span><span class="default">);</span>
+<a name="66"><font size=-1>66     </font></a><span class="default">    }</span>
+<a name="67"><font size=-1>67     </font></a><span class="default"></span>
+<a name="68"><font size=-1>68     </font></a><span class="default">    <a href="dictionary_C.html#91291">AddressBook</a>.<a href="dictionary_P.html#91293">Builder</a> <a href="dictionary_A.html#91287">addressBook</a> = <a href="dictionary_C.html#91291">AddressBook</a>.<a href="dictionary_N.html#51">newBuilder</a>();</span>
+<a name="69"><font size=-1>69     </font></a><span class="default"></span>
+<a name="70"><font size=-1>70     </font></a><span class="default">    </span><span class="comment">// Read the existing address book.</span>
+<a name="71"><font size=-1>71     </font></a><span class="comment">    </span><span class="keyword">try </span><span class="default">{</span>
+<a name="72"><font size=-1>72     </font></a><span class="default">      <a href="dictionary_J.html#91295">FileInputStream</a> <a href="dictionary_A.html#91289">input</a> = </span><span class="keyword">new <a href="dictionary_J.html#91295">FileInputStream</a></span><span class="default">(<a href="dictionary_A.html#91288">args</a>[</span><span class="number">0</span><span class="default">]);</span>
+<a name="73"><font size=-1>73     </font></a><span class="default">      </span><span class="keyword">try </span><span class="default">{</span>
+<a name="74"><font size=-1>74     </font></a><span class="default">        <a href="dictionary_A.html#91287">addressBook</a>.<a href="dictionary_M.html#36885">mergeFrom</a>(<a href="dictionary_A.html#91289">input</a>);</span>
+<a name="75"><font size=-1>75     </font></a><span class="default">      } </span><span class="keyword">finally </span><span class="default">{</span>
+<a name="76"><font size=-1>76     </font></a><span class="default">        </span><span class="keyword">try </span><span class="default">{ <a href="dictionary_A.html#91289">input</a>.<a href="dictionary_C.html#79950">close</a>(); } </span><span class="keyword">catch </span><span class="default">(<a href="dictionary_T.html#24629">Throwable</a> <a href="dictionary_A.html#91285">ignore</a>) {}</span>
+<a name="77"><font size=-1>77     </font></a><span class="default">      }</span>
+<a name="78"><font size=-1>78     </font></a><span class="default">    } </span><span class="keyword">catch </span><span class="default">(<a href="dictionary_J.html#36843">FileNotFoundException</a> <a href="dictionary_A.html#91286">e</a>) {</span>
+<a name="79"><font size=-1>79     </font></a><span class="default">      System.out.<a href="dictionary_P.html#36850">println</a>(<a href="dictionary_A.html#91288">args</a>[</span><span class="number">0</span><span class="default">] + </span><span class="string">&quot;: File not found.  Creating a new file.&quot;</span><span class="default">);</span>
+<a name="80"><font size=-1>80     </font></a><span class="default">    }</span>
+<a name="81"><font size=-1>81     </font></a><span class="default"></span>
+<a name="82"><font size=-1>82     </font></a><span class="default">    </span><span class="comment">// Add an address.</span>
+<a name="83"><font size=-1>83     </font></a><span class="comment">    <a href="dictionary_A.html#91287">addressBook</a></span><span class="default">.<a href="dictionary_A.html#91284">addPerson</a>(</span>
+<a name="84"><font size=-1>84     </font></a><span class="default">      <a href="dictionary_A.html#91268">PromptForAddress</a>(</span><span class="keyword">new <a href="dictionary_J.html#91292">BufferedReader</a></span><span class="default">(</span><span class="keyword">new <a href="dictionary_J.html#91296">InputStreamReader</a></span><span class="default">(System.in)),</span>
+<a name="85"><font size=-1>85     </font></a><span class="default">                       System.out));</span>
+<a name="86"><font size=-1>86     </font></a><span class="default"></span>
+<a name="87"><font size=-1>87     </font></a><span class="default">    </span><span class="comment">// Write the new address book back to disk.</span>
+<a name="88"><font size=-1>88     </font></a><span class="comment">    <a href="dictionary_J.html#36844">FileOutputStream</a> <a href="dictionary_A.html#91290">output</a> </span><span class="default">= </span><span class="keyword">new <a href="dictionary_J.html#36844">FileOutputStream</a></span><span class="default">(<a href="dictionary_A.html#91288">args</a>[</span><span class="number">0</span><span class="default">]);</span>
+<a name="89"><font size=-1>89     </font></a><span class="default">    </span><span class="keyword">try </span><span class="default">{</span>
+<a name="90"><font size=-1>90     </font></a><span class="default">      <a href="dictionary_A.html#91287">addressBook</a>.<a href="dictionary_B.html#46">build</a>().<a href="dictionary_W.html#36874">writeTo</a>(<a href="dictionary_A.html#91290">output</a>);</span>
+<a name="91"><font size=-1>91     </font></a><span class="default">    } </span><span class="keyword">finally </span><span class="default">{</span>
+<a name="92"><font size=-1>92     </font></a><span class="default">      <a href="dictionary_A.html#91290">output</a>.<a href="dictionary_C.html#79950">close</a>();</span>
+<a name="93"><font size=-1>93     </font></a><span class="default">    }</span>
+<a name="94"><font size=-1>94     </font></a><span class="default">  }</span>
+<a name="95"><font size=-1>95     </font></a><span class="default">}</span>
+<a name="96"><font size=-1>96     </font></a><span class="default"></span>
+</pre></body></html>

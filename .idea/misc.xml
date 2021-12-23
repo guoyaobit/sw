@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MakefileSettings">
+    <option name="linkedExternalProjectsSettings">
+      <MakefileProjectSettings>
+        <option name="buildOptions" value="--jobs=6 compiler TOP=/Docker-nvdla/sw/umd" />
+        <option name="buildTarget" value="" />
+        <option name="cleanTarget" value="make clean" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/umd" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/umd" />
+          </set>
+        </option>
+        <option name="preConfigureCommands" value="make clean" />
+        <option name="version" value="2" />
+      </MakefileProjectSettings>
+    </option>
+  </component>
+  <component name="MakefileWorkspace" PROJECT_DIR="$PROJECT_DIR$/umd">
+    <contentRoot DIR="$PROJECT_DIR$" />
+  </component>
+</project>

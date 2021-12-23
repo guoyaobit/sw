@@ -1,0 +1,69 @@
+<html><head><title>add_person.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="sourcestyles.css" />
+</head><body link="blue" vlink="blue">
+<h3>File: C:\Users\X1G9\Desktop\NVDLA\sw\umd\external\protobuf-2.6\examples\add_person.py</h3>
+<SCRIPT>
+defaultStatus = "File: C:\\Users\\X1G9\\Desktop\\NVDLA\\sw\\umd\\external\\protobuf-2.6\\examples\\add_person.py";
+top.document.title  = "add_person.py";
+</SCRIPT>
+<pre><span class="default"></span><a name="1"><font size=-1>1     </font></a><span class="default"></span><span class="comment">#! /usr/bin/python</span>
+<a name="2"><font size=-1>2     </font></a><span class="comment"></span>
+<a name="3"><font size=-1>3     </font></a><span class="comment"># See README.txt for information and build instructions.</span>
+<a name="4"><font size=-1>4     </font></a><span class="comment"></span>
+<a name="5"><font size=-1>5     </font></a><span class="comment"></span><span class="keyword">import </span><span class="default">addressbook_pb2</span>
+<a name="6"><font size=-1>6     </font></a><span class="default"></span><span class="keyword">import </span><span class="default">sys</span>
+<a name="7"><font size=-1>7     </font></a><span class="default"></span>
+<a name="8"><font size=-1>8     </font></a><span class="default"></span><span class="comment"># This function fills in a Person message based on user input.</span>
+<a name="9"><font size=-1>9     </font></a><span class="comment"></span><span class="keyword">def <a href="dictionary_A.html#202521">PromptForAddress</a></span><span class="default">(<a href="dictionary_A.html#208109">person</a>):</span>
+<a name="10"><font size=-1>10     </font></a><span class="default">  <a href="dictionary_A.html#208109">person</a>.<a href="dictionary_I.html#206482">id</a> = int(<a href="dictionary_R.html#208395">raw_input</a>(</span><span class="string">&quot;Enter person ID number: &quot;</span><span class="default">))</span>
+<a name="11"><font size=-1>11     </font></a><span class="default">  <a href="dictionary_A.html#208109">person</a>.<a href="dictionary_N.html#207517">name</a> = <a href="dictionary_R.html#208395">raw_input</a>(</span><span class="string">&quot;Enter name: &quot;</span><span class="default">)</span>
+<a name="12"><font size=-1>12     </font></a><span class="default"></span>
+<a name="13"><font size=-1>13     </font></a><span class="default">  <a href="dictionary_A.html#205386">email</a> = <a href="dictionary_R.html#208395">raw_input</a>(</span><span class="string">&quot;Enter email address (blank for none): &quot;</span><span class="default">)</span>
+<a name="14"><font size=-1>14     </font></a><span class="default">  </span><span class="keyword">if <a href="dictionary_A.html#205386">email</a> </span><span class="default">!= </span><span class="string">&quot;&quot;</span><span class="default">:</span>
+<a name="15"><font size=-1>15     </font></a><span class="default">    <a href="dictionary_A.html#208109">person</a>.<a href="dictionary_E.html#205387">email</a> = <a href="dictionary_A.html#205386">email</a></span>
+<a name="16"><font size=-1>16     </font></a><span class="default"></span>
+<a name="17"><font size=-1>17     </font></a><span class="default">  </span><span class="keyword">while True</span><span class="default">:</span>
+<a name="18"><font size=-1>18     </font></a><span class="default">    <a href="dictionary_A.html#207680">number</a> = <a href="dictionary_R.html#208395">raw_input</a>(</span><span class="string">&quot;Enter a phone number (or leave blank to finish): &quot;</span><span class="default">)</span>
+<a name="19"><font size=-1>19     </font></a><span class="default">    </span><span class="keyword">if <a href="dictionary_A.html#207680">number</a> </span><span class="default">== </span><span class="string">&quot;&quot;</span><span class="default">:</span>
+<a name="20"><font size=-1>20     </font></a><span class="default">      </span><span class="keyword">break</span>
+<a name="21"><font size=-1>21     </font></a><span class="keyword"></span>
+<a name="22"><font size=-1>22     </font></a><span class="keyword">    <a href="dictionary_A.html#208114">phone_number</a> </span><span class="default">= <a href="dictionary_A.html#208109">person</a>.<a href="dictionary_P.html#208113">phone</a>.<a href="dictionary_A.html#204418">add</a>()</span>
+<a name="23"><font size=-1>23     </font></a><span class="default">    <a href="dictionary_A.html#208114">phone_number</a>.<a href="dictionary_N.html#207681">number</a> = <a href="dictionary_A.html#207680">number</a></span>
+<a name="24"><font size=-1>24     </font></a><span class="default"></span>
+<a name="25"><font size=-1>25     </font></a><span class="default">    <a href="dictionary_A.html#210934">type</a> = <a href="dictionary_R.html#208395">raw_input</a>(</span><span class="string">&quot;Is this a mobile, home, or work phone? &quot;</span><span class="default">)</span>
+<a name="26"><font size=-1>26     </font></a><span class="default">    </span><span class="keyword">if <a href="dictionary_A.html#210934">type</a> </span><span class="default">== </span><span class="string">&quot;mobile&quot;</span><span class="default">:</span>
+<a name="27"><font size=-1>27     </font></a><span class="default">      <a href="dictionary_A.html#208114">phone_number</a>.<a href="dictionary_T.html#210936">type</a> = addressbook_pb2.<a href="dictionary_P.html#202503">Person</a>.<a href="dictionary_M.html#202320">MOBILE</a></span>
+<a name="28"><font size=-1>28     </font></a><span class="default">    </span><span class="keyword">elif <a href="dictionary_A.html#210934">type</a> </span><span class="default">== </span><span class="string">&quot;home&quot;</span><span class="default">:</span>
+<a name="29"><font size=-1>29     </font></a><span class="default">      <a href="dictionary_A.html#208114">phone_number</a>.<a href="dictionary_T.html#210936">type</a> = addressbook_pb2.<a href="dictionary_P.html#202503">Person</a>.<a href="dictionary_H.html#202191">HOME</a></span>
+<a name="30"><font size=-1>30     </font></a><span class="default">    </span><span class="keyword">elif <a href="dictionary_A.html#210934">type</a> </span><span class="default">== </span><span class="string">&quot;work&quot;</span><span class="default">:</span>
+<a name="31"><font size=-1>31     </font></a><span class="default">      <a href="dictionary_A.html#208114">phone_number</a>.<a href="dictionary_T.html#210936">type</a> = addressbook_pb2.<a href="dictionary_P.html#202503">Person</a>.<a href="dictionary_W.html#202976">WORK</a></span>
+<a name="32"><font size=-1>32     </font></a><span class="default">    </span><span class="keyword">else</span><span class="default">:</span>
+<a name="33"><font size=-1>33     </font></a><span class="default">      print </span><span class="string">&quot;Unknown phone type; leaving as default value.&quot;</span>
+<a name="34"><font size=-1>34     </font></a><span class="string"></span>
+<a name="35"><font size=-1>35     </font></a><span class="string"></span><span class="comment"># Main procedure:  Reads the entire address book from a file,</span>
+<a name="36"><font size=-1>36     </font></a><span class="comment">#   adds one person based on user input, then writes it back out to the same</span>
+<a name="37"><font size=-1>37     </font></a><span class="comment">#   file.</span>
+<a name="38"><font size=-1>38     </font></a><span class="comment"></span><span class="keyword">if </span><span class="default">len(sys.argv) != </span><span class="number">2</span><span class="default">:</span>
+<a name="39"><font size=-1>39     </font></a><span class="default">  print </span><span class="string">&quot;Usage:&quot;</span><span class="default">, sys.argv[</span><span class="number">0</span><span class="default">], </span><span class="string">&quot;ADDRESS_BOOK_FILE&quot;</span>
+<a name="40"><font size=-1>40     </font></a><span class="string">  </span><span class="default">sys.exit(-</span><span class="number">1</span><span class="default">)</span>
+<a name="41"><font size=-1>41     </font></a><span class="default"></span>
+<a name="42"><font size=-1>42     </font></a><span class="default"><a href="dictionary_A.html#204431">address_book</a> = addressbook_pb2.<a href="dictionary_A.html#201467">AddressBook</a>()</span>
+<a name="43"><font size=-1>43     </font></a><span class="default"></span>
+<a name="44"><font size=-1>44     </font></a><span class="default"></span><span class="comment"># Read the existing address book.</span>
+<a name="45"><font size=-1>45     </font></a><span class="comment"></span><span class="keyword">try</span><span class="default">:</span>
+<a name="46"><font size=-1>46     </font></a><span class="default">  <a href="dictionary_A.html#205812">f</a> = open(sys.argv[</span><span class="number">1</span><span class="default">], </span><span class="string">&quot;rb&quot;</span><span class="default">)</span>
+<a name="47"><font size=-1>47     </font></a><span class="default">  <a href="dictionary_A.html#204431">address_book</a>.<a href="dictionary_P.html#202491">ParseFromString</a>(<a href="dictionary_A.html#205812">f</a>.<a href="dictionary_R.html#208398">read</a>())</span>
+<a name="48"><font size=-1>48     </font></a><span class="default">  <a href="dictionary_A.html#205812">f</a>.<a href="dictionary_C.html#204813">close</a>()</span>
+<a name="49"><font size=-1>49     </font></a><span class="default"></span><span class="keyword">except </span><span class="default">IOError:</span>
+<a name="50"><font size=-1>50     </font></a><span class="default">  print sys.argv[</span><span class="number">1</span><span class="default">] + </span><span class="string">&quot;: File not found.  Creating a new file.&quot;</span>
+<a name="51"><font size=-1>51     </font></a><span class="string"></span>
+<a name="52"><font size=-1>52     </font></a><span class="string"></span><span class="comment"># Add an address.</span>
+<a name="53"><font size=-1>53     </font></a><span class="comment"><a href="dictionary_A.html#202521">PromptForAddress</a></span><span class="default">(<a href="dictionary_A.html#204431">address_book</a>.<a href="dictionary_P.html#208111">person</a>.<a href="dictionary_A.html#204418">add</a>())</span>
+<a name="54"><font size=-1>54     </font></a><span class="default"></span>
+<a name="55"><font size=-1>55     </font></a><span class="default"></span><span class="comment"># Write the new address book back to disk.</span>
+<a name="56"><font size=-1>56     </font></a><span class="comment"><a href="dictionary_A.html#205812">f</a> </span><span class="default">= open(sys.argv[</span><span class="number">1</span><span class="default">], </span><span class="string">&quot;wb&quot;</span><span class="default">)</span>
+<a name="57"><font size=-1>57     </font></a><span class="default"><a href="dictionary_A.html#205812">f</a>.<a href="dictionary_W.html#211307">write</a>(<a href="dictionary_A.html#204431">address_book</a>.<a href="dictionary_S.html#202691">SerializeToString</a>())</span>
+<a name="58"><font size=-1>58     </font></a><span class="default"><a href="dictionary_A.html#205812">f</a>.<a href="dictionary_C.html#204813">close</a>()</span>
+<a name="59"><font size=-1>59     </font></a><span class="default"></span>
+</pre></body></html>
